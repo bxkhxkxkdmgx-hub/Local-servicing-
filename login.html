@@ -4,123 +4,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Local Servicing Login</title>
-
+<title>Local Servicing</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #eef4ff;
-  margin: 0;
-  padding: 20px;
-}
-.card {
-  max-width: 400px;
-  margin: 30px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-}
-h2 {
-  text-align: center;
-  color: #0759c7;
-}
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-button {
-  width: 100%;
-  padding: 13px;
-  background: #0759c7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  margin-top: 10px;
-  font-size: 16px;
-}
-a {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-}
+body{font-family:Arial;background:#eaf2ff;padding:20px}
+.card{max-width:400px;margin:30px auto;background:white;padding:25px;border-radius:15px}
+h2{text-align:center;color:#0759c7}
+input{width:100%;padding:13px;margin:10px 0;box-sizing:border-box;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:13px;background:#0759c7;color:white;border:0;border-radius:8px;margin-top:10px}
+#msg{text-align:center;word-break:break-word}
 </style>
 </head>
-
 <body>
-
 <div class="card">
 <h2>Local Servicing</h2>
-<h3>লগইন করুন</h3>
 
-<input id="email" type="email" placeholder="আপনার ইমেইল">
-<input id="password" type="password" placeholder="পাসওয়ার্ড">
+<div id="loginBox">
+<h3>লগইন</h3>
+<input id="loginEmail" type="email" placeholder="ইমেইল">
+<input id="loginPass" type="password" placeholder="পাসওয়ার্ড">
+<button id="loginBtn">লগইন</button>
+<p>অ্যাকাউন্ট নেই?</p>
+<button id="goRegister">রেজিস্ট্রেশন করুন</button>
+</div>
 
-<button onclick="login()">লগইন</button>
-<button onclick="register()">রেজিস্ট্রেশন</button>
+<div id="registerBox" style="display:none">
+<h3>নতুন অ্যাকাউন্ট তৈরি</h3>
+<input id="regEmail" type="email" placeholder="ইমেইল">
+<input id="regPass" type="password" placeholder="পাসওয়ার্ড (৬ অক্ষর)">
+<button id="registerBtn">অ্যাকাউন্ট তৈরি করুন</button>
+<p>আগে অ্যাকাউন্ট আছে?</p>
+<button id="goLogin">লগইন করুন</button>
+</div>
 
-<p id="message"></p>
-
-<a href="index.html">হোম পেজে ফিরে যান</a>
+<p id="msg"></p>
+<a href="index.html">হোম পেজ</a>
 </div>
 
 <script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import {
-getAuth,
-signInWithEmailAndPassword,
-createUserWithEmailAndPassword
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyAzlIrVn9FrsBDNNDoCvRCU1bHxSNtEzhY",
-authDomain: "project-be074433-8fce-4dc9-bd7.firebaseapp.com",
-projectId: "project-be074433-8fce-4dc9-bd7",
-storageBucket: "project-be074433-8fce-4dc9-bd7.firebasestorage.app",
-messagingSenderId: "678442800678",
-appId: "1:678442800678:web:dc364fe500d9c3e37af8e7"
+const firebaseConfig={
+apiKey:"AIzaSyAzlIrVn9FrsBDNNDoCvRCU1bHxSNtEzhY",
+authDomain:"project-be074433-8fce-4dc9-bd7.firebaseapp.com",
+projectId:"project-be074433-8fce-4dc9-bd7",
+storageBucket:"project-be074433-8fce-4dc9-bd7.firebasestorage.app",
+messagingSenderId:"678442800678",
+appId:"1:678442800678:web:dc364fe500d9c3e37af8e7"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const auth=getAuth(initializeApp(firebaseConfig));
+const $=id=>document.getElementById(id);
 
-window.login = async function() {
-try {
-await signInWithEmailAndPassword(
-auth,
-document.getElementById("email").value.trim(),
-document.getElementById("password").value
-);
-document.getElementById("message").innerText =
-"লগইন সফল হয়েছে!";
-} catch(error) {
-document.getElementById("message").innerText =
-"লগইন হয়নি: " + error.message;
+$("goRegister").onclick=()=>{
+$("loginBox").style.display="none";
+$("registerBox").style.display="block";
+$("msg").innerText="";
+};
+
+$("goLogin").onclick=()=>{
+$("registerBox").style.display="none";
+$("loginBox").style.display="block";
+$("msg").innerText="";
+};
+
+$("registerBtn").onclick=async()=>{
+$("msg").innerText="অপেক্ষা করুন...";
+try{
+await createUserWithEmailAndPassword(auth,$("regEmail").value.trim(),$("regPass").value);
+$("msg").innerText="রেজিস্ট্রেশন সফল হয়েছে!";
+}catch(e){
+$("msg").innerText="সমস্যা: "+e.message;
 }
 };
 
-window.register = async function() {
-try {
-await createUserWithEmailAndPassword(
-auth,
-document.getElementById("email").value.trim(),
-document.getElementById("password").value
-);
-document.getElementById("message").innerText =
-"রেজিস্ট্রেশন সফল হয়েছে!";
-} catch(error) {
-document.getElementById("message").innerText =
-"রেজিস্ট্রেশন হয়নি: " + error.message;
+$("loginBtn").onclick=async()=>{
+$("msg").innerText="অপেক্ষা করুন...";
+try{
+await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPass").value);
+$("msg").innerText="লগইন সফল হয়েছে!";
+}catch(e){
+$("msg").innerText="সমস্যা: "+e.message;
 }
 };
 </script>
-
 </body>
 </html>
 
