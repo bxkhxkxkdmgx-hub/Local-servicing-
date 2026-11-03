@@ -1,1 +1,233 @@
 
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local Servicing Dashboard</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#eaf2ff;
+margin:0;
+padding:15px;
+}
+header{
+background:#0759c7;
+color:white;
+padding:20px;
+border-radius:12px;
+text-align:center;
+}
+.card{
+background:white;
+padding:20px;
+margin-top:15px;
+border-radius:12px;
+box-shadow:0 3px 10px #ddd;
+}
+h2,h3{color:#0759c7}
+button{
+background:#0759c7;
+color:white;
+border:0;
+padding:13px;
+border-radius:8px;
+width:100%;
+margin-top:10px;
+font-size:16px;
+}
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:8px 0;
+box-sizing:border-box;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:16px;
+}
+.category{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+.cat{
+background:#edf4ff;
+padding:18px 5px;
+border-radius:10px;
+text-align:center;
+color:#0759c7;
+font-weight:bold;
+}
+.pay{
+background:#fff3cd;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2 style="color:white">Local Servicing</h2>
+<p>আপনার এলাকার সেরা সার্ভিস</p>
+</header>
+
+<!-- অগ্রিম পেমেন্ট -->
+<div class="card pay">
+<h2 style="color:#d62828">১০০ টাকা অগ্রিম</h2>
+<p><b>সার্ভিস নিতে ১০০ টাকা অগ্রিম প্রদান করতে হবে।</b></p>
+<p>বিকাশ অথবা নগদে টাকা প্রদান করুন।</p>
+
+<h3>বিকাশ পেমেন্ট</h3>
+<p><b>01919011365</b></p>
+<button onclick="copyPay('01919011365')">
+বিকাশ নম্বর কপি করুন
+</button>
+
+<h3>নগদ পেমেন্ট</h3>
+<p><b>01990624653</b></p>
+<button onclick="copyPay('01990624653')">
+নগদ নম্বর কপি করুন
+</button>
+
+<p>টাকা পাঠানোর পর বুকিং ফর্ম পূরণ করুন।</p>
+</div>
+
+<!-- ইউজার -->
+<div class="card">
+<h3>স্বাগতম!</h3>
+<p id="userEmail">লোড হচ্ছে...</p>
+<button onclick="logout()">লগআউট</button>
+</div>
+
+<!-- সার্ভিস ক্যাটাগরি -->
+<div class="card">
+<h3>সার্ভিস ক্যাটাগরি</h3>
+<div class="category">
+<div class="cat">🔌 ইলেকট্রিক</div>
+<div class="cat">🚰 প্লাম্বার</div>
+<div class="cat">❄️ এসি সার্ভিস</div>
+<div class="cat">🛠️ মিস্ত্রি</div>
+<div class="cat">🧹 ক্লিনিং</div>
+<div class="cat">💻 কম্পিউটার</div>
+</div>
+</div>
+
+<!-- সার্ভিস খোঁজা -->
+<div class="card">
+<h3>সার্ভিস খুঁজুন</h3>
+<input id="search" placeholder="কোন সার্ভিস খুঁজছেন?">
+<button onclick="searchService()">খুঁজুন</button>
+<p id="searchMsg"></p>
+</div>
+
+<!-- বুকিং ফর্ম -->
+<div class="card">
+<h3>সার্ভিস বুকিং ফর্ম</h3>
+
+<input id="name" placeholder="আপনার নাম">
+<input id="phone" type="tel" placeholder="মোবাইল নম্বর">
+<input id="address" placeholder="আপনার ঠিকানা">
+
+<select id="service">
+<option value="">সার্ভিস নির্বাচন করুন</option>
+<option>ইলেকট্রিক</option>
+<option>প্লাম্বার</option>
+<option>এসি সার্ভিস</option>
+<option>মিস্ত্রি</option>
+<option>ক্লিনিং</option>
+<option>কম্পিউটার</option>
+</select>
+
+<textarea id="details" placeholder="সমস্যার বিবরণ"></textarea>
+
+<select id="payment">
+<option value="">পেমেন্ট মাধ্যম নির্বাচন</option>
+<option>বিকাশ</option>
+<option>নগদ</option>
+</select>
+
+<input id="trx" placeholder="পেমেন্ট TrxID লিখুন">
+
+<button onclick="submitService()">বুকিং আবেদন পাঠান</button>
+<p id="formMsg"></p>
+</div>
+
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyAzlIrVn9FrsBDNNDoCvRCU1bHxSNtEzhY",
+authDomain:"project-be074433-8fce-4dc9-bd7.firebaseapp.com",
+projectId:"project-be074433-8fce-4dc9-bd7",
+storageBucket:"project-be074433-8fce-4dc9-bd7.firebasestorage.app",
+messagingSenderId:"678442800678",
+appId:"1:678442800678:web:dc364fe500d9c3e37af8e7"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+let currentUser=null;
+
+onAuthStateChanged(auth,user=>{
+if(user){
+currentUser=user;
+document.getElementById("userEmail").innerText=
+"আপনার ইমেইল: "+user.email;
+}else{
+window.location.href="login.html";
+}
+});
+
+window.logout=async()=>{
+await signOut(auth);
+window.location.href="login.html";
+};
+
+window.copyPay=async(number)=>{
+try{
+await navigator.clipboard.writeText(number);
+alert("নম্বর কপি হয়েছে: "+number);
+}catch(e){
+alert("পেমেন্ট নম্বর: "+number);
+}
+};
+
+window.searchService=()=>{
+const value=document.getElementById("search").value.trim();
+document.getElementById("searchMsg").innerText=
+value ? "আপনি খুঁজছেন: "+value
+: "সার্ভিসের নাম লিখুন।";
+};
+
+window.submitService=()=>{
+const name=document.getElementById("name").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const address=document.getElementById("address").value.trim();
+const service=document.getElementById("service").value;
+const details=document.getElementById("details").value.trim();
+const payment=document.getElementById("payment").value;
+const trx=document.getElementById("trx").value.trim();
+
+if(!name||!phone||!address||!service||!details||!payment||!trx){
+document.getElementById("formMsg").innerText=
+"সব তথ্য পূরণ করুন।";
+return;
+}
+
+document.getElementById("formMsg").innerText=
+"আবেদন গ্রহণের তথ্য পূরণ হয়েছে। পেমেন্ট যাচাই করে বুকিং নিশ্চিত করা হবে।";
+};
+</script>
+
+</body>
+</html>
