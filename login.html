@@ -1,1 +1,126 @@
 
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local Servicing Login</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eef4ff;
+  margin: 0;
+  padding: 20px;
+}
+.card {
+  max-width: 400px;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+h2 {
+  text-align: center;
+  color: #0759c7;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+button {
+  width: 100%;
+  padding: 13px;
+  background: #0759c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Local Servicing</h2>
+<h3>লগইন করুন</h3>
+
+<input id="email" type="email" placeholder="আপনার ইমেইল">
+<input id="password" type="password" placeholder="পাসওয়ার্ড">
+
+<button onclick="login()">লগইন</button>
+<button onclick="register()">রেজিস্ট্রেশন</button>
+
+<p id="message"></p>
+
+<a href="index.html">হোম পেজে ফিরে যান</a>
+</div>
+
+<script type="module">
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword,
+createUserWithEmailAndPassword
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAzlIrVn9FrsBDNNDoCvRCU1bHxSNtEzhY",
+authDomain: "project-be074433-8fce-4dc9-bd7.firebaseapp.com",
+projectId: "project-be074433-8fce-4dc9-bd7",
+storageBucket: "project-be074433-8fce-4dc9-bd7.firebasestorage.app",
+messagingSenderId: "678442800678",
+appId: "1:678442800678:web:dc364fe500d9c3e37af8e7"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function() {
+try {
+await signInWithEmailAndPassword(
+auth,
+document.getElementById("email").value.trim(),
+document.getElementById("password").value
+);
+document.getElementById("message").innerText =
+"লগইন সফল হয়েছে!";
+} catch(error) {
+document.getElementById("message").innerText =
+"লগইন হয়নি: " + error.message;
+}
+};
+
+window.register = async function() {
+try {
+await createUserWithEmailAndPassword(
+auth,
+document.getElementById("email").value.trim(),
+document.getElementById("password").value
+);
+document.getElementById("message").innerText =
+"রেজিস্ট্রেশন সফল হয়েছে!";
+} catch(error) {
+document.getElementById("message").innerText =
+"রেজিস্ট্রেশন হয়নি: " + error.message;
+}
+};
+</script>
+
+</body>
+</html>
+
