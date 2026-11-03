@@ -83,6 +83,7 @@ $("msg").innerText="অপেক্ষা করুন...";
 try{
 await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPass").value);
 $("msg").innerText="লগইন সফল হয়েছে!";
+window.location.href="dashboard.html";
 }catch(e){
 $("msg").innerText="সমস্যা: "+e.message;
 }
