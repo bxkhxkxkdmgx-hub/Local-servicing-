@@ -3,134 +3,57 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Local Servicing Dashboard</title>
 
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#eaf2ff;
- color:#10234a;
-}
-header{
- background:#0647b8;
- color:white;
- padding:15px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- flex-wrap:wrap;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#edf4ff;color:#10234a}
+header{background:#0647b8;color:white;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 header h2{margin:0}
-button{cursor:pointer;font-size:15px;font-weight:bold}
-.topbtn{
- background:#ed174c;color:white;border:0;
- padding:12px;border-radius:8px
-}
-.layout{
- display:grid;
- grid-template-columns:260px 1fr;
- gap:12px;padding:12px
-}
-.sidebar,.main{min-width:0}
-.card{
- background:white;border-radius:13px;
- padding:15px;margin-bottom:12px;
- box-shadow:0 3px 10px #0001
-}
-.menu-title{
- background:#0647b8;color:white;
- padding:13px;border-radius:10px;
- font-size:18px;font-weight:bold;
-}
-.menu-btn{
- width:100%;padding:13px;margin-top:8px;
- border:1px solid #dbe5f8;border-radius:9px;
- background:#f4f8ff;color:#0647b8;
- text-align:left;font-weight:bold
-}
-.menu-btn:hover{background:#dceaff}
-.pay-bkash{color:#e21370;background:#fff0f7}
-.pay-nagad{color:#e63812;background:#fff3e9}
-.hidden{display:none}
-.banner{
- background:linear-gradient(120deg,#0647b8,#1677ef);
- color:white;border-radius:14px;
- padding:22px;margin-bottom:12px;
- display:flex;justify-content:space-between;
- align-items:center;gap:15px;flex-wrap:wrap
-}
-.banner h1{margin:0;font-size:27px}
-.banner p{margin:8px 0}
-.banner .bike{font-size:75px}
-.title{
- color:#0647b8;font-size:20px;
- margin:0 0 14px
-}
-input,select,textarea{
- width:100%;padding:12px;margin:7px 0;
- border:1px solid #c7d5ed;border-radius:8px;
- font-size:15px;background:white
-}
-textarea{min-height:85px}
-.btn{
- border:0;border-radius:8px;padding:13px;
- width:100%;margin-top:8px
-}
+header button{background:#ed174c;color:white;border:0;padding:10px;border-radius:8px}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:90vh}
+.sidebar{background:#09275d;color:white;padding:12px}
+.main{padding:14px;min-width:0}
+.card{background:white;border-radius:13px;padding:15px;margin-bottom:13px;box-shadow:0 3px 10px #0001}
+.menu-title{background:#0759d6;padding:14px;border-radius:9px;font-weight:bold;font-size:18px}
+.menu-btn{width:100%;padding:13px;margin-top:8px;border:0;border-radius:8px;background:#173b7b;color:white;text-align:left;font-size:16px}
+.menu-btn:hover{background:#0759d6}
+.hidden{display:none!important}
+.banner{background:linear-gradient(120deg,#0759d6,#032b83);color:white;padding:25px;border-radius:14px;margin-bottom:13px;display:flex;justify-content:space-between;align-items:center}
+.banner h1{font-size:28px;margin:0}
+.bike{font-size:65px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:13px}
+.stat{padding:18px;background:#0759d6;color:white;border-radius:12px;text-align:center;font-weight:bold}
+.stat:nth-child(2){background:#08a65b}
+.stat:nth-child(3){background:#7b20e8}
+.stat:nth-child(4){background:#ff7600}
+.content-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:13px}
+h3{color:#0759d6;margin-top:0}
+input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #c5d5ef;border-radius:8px;font-size:15px}
+textarea{min-height:80px}
+.btn{width:100%;padding:13px;border:0;border-radius:8px;margin-top:8px;font-size:16px;font-weight:bold}
 .blue{background:#0759d6;color:white}
-.green{background:#12a348;color:white}
+.green{background:#0aa64f;color:white}
 .red{background:#e91e63;color:white}
 .orange{background:#ff650d;color:white}
-.payinfo{
- background:#fff4f9;border:1px solid #ffc5df;
- padding:12px;border-radius:10px;margin-top:10px
-}
-.payinfo h3{color:#e21370;margin:5px}
-.payinfo.nagad{background:#fff5ed;border-color:#ffc9a6}
-.payinfo.nagad h3{color:#e63812}
-.number{font-size:22px;font-weight:bold;margin:10px}
-.categories{
- display:grid;grid-template-columns:repeat(2,1fr);
- gap:9px
-}
-.cat{
- border:1px solid #d4e2fa;background:#eff6ff;
- color:#0647b8;padding:15px 5px;
- border-radius:10px;text-align:center;font-weight:bold
-}
-.cat button{
- border:0;background:none;color:inherit;
- width:100%;font-weight:bold
-}
-.notice{
- background:#e8f4ff;padding:12px;
- border-radius:9px;color:#0759d6;margin:10px 0
-}
+.paybox{padding:13px;border-radius:10px;background:#fff0f7;border:1px solid #ffc5df;text-align:center;margin-bottom:10px}
+.paybox.nagad{background:#fff3e9;border-color:#ffc9a6}
+.paynum{font-size:21px;font-weight:bold;margin:10px}
+.notice{background:#fff2b8;padding:12px;border-radius:8px;text-align:center;font-weight:bold}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{border:1px solid #d6e1f3;padding:8px;text-align:center}
-th{background:#e6efff}
-.status{color:#e68a00;font-weight:bold}
-.whatsapp{
- position:fixed;bottom:18px;right:15px;
- background:#25d366;color:white;
- padding:14px 18px;border-radius:50px;
- text-decoration:none;font-weight:bold;
- box-shadow:0 4px 12px #0003;z-index:99
-}
-footer{
- background:#063c9d;color:white;text-align:center;
- padding:18px;margin-top:10px
-}
-@media(max-width:750px){
- .layout{grid-template-columns:1fr}
- header h2{font-size:20px}
- .banner h1{font-size:23px}
- .banner .bike{font-size:50px}
- table{font-size:11px}
- th,td{padding:5px}
+th,td{border:1px solid #d5e2f5;padding:9px;text-align:center}
+th{background:#e5efff}
+.whatsapp{display:block;background:#13b653;color:white;text-decoration:none;text-align:center;padding:15px;border-radius:12px;font-weight:bold;margin-top:13px}
+footer{text-align:center;padding:20px;background:#063c9d;color:white}
+@media(max-width:800px){
+.layout{grid-template-columns:1fr}
+.sidebar{padding:10px}
+.main{padding:10px}
+.stats{grid-template-columns:repeat(2,1fr)}
+.content-grid{grid-template-columns:1fr}
+.banner h1{font-size:22px}
+.bike{font-size:45px}
 }
 </style>
 </head>
@@ -140,17 +63,17 @@ footer{
 <header>
 <div>
 <h2>🏠 Local Servicing</h2>
-<small>আপনার এলাকার সেরা সার্ভিস</small>
+আপনার এলাকার সেরা সার্ভিস
 </div>
 <div>
 <span id="email">লোড হচ্ছে...</span>
-<button class="topbtn" onclick="logout()">লগআউট</button>
+<button onclick="logout()">লগআউট</button>
 </div>
 </header>
 
 <div class="layout">
 
-<!-- বাম পাশের মেনু -->
+<!-- SIDE MENU -->
 <aside class="sidebar">
 
 <div class="card">
@@ -158,90 +81,104 @@ footer{
 <p id="userEmail">লোড হচ্ছে...</p>
 </div>
 
+<!-- PAYMENT MENU -->
 <div class="card">
 <div class="menu-title">💳 পেমেন্ট মেনু</div>
 
-<button class="menu-btn" onclick="togglePayment()">
-💳 পেমেন্ট মাধ্যম নির্বাচন ▼
+<button class="menu-btn" onclick="openPage('paymentPage')">
+💳 পেমেন্ট করুন
 </button>
-
-<div id="paymentMenu" class="hidden">
-<button class="menu-btn pay-bkash"
-onclick="showPay('bkash')">💗 বিকাশ</button>
-
-<button class="menu-btn pay-nagad"
-onclick="showPay('nagad')">🟠 নগদ</button>
 </div>
 
-<div id="bkashInfo" class="payinfo hidden">
-<h3>বিকাশ পেমেন্ট</h3>
-<p>বিকাশ নম্বর:</p>
-<div class="number">01919011365</div>
-<button class="btn red" onclick="copyNum('01919011365')">
-নম্বর কপি করুন
-</button>
-<p>১০০ টাকা Send Money করুন।</p>
-</div>
-
-<div id="nagadInfo" class="payinfo nagad hidden">
-<h3>নগদ পেমেন্ট</h3>
-<p>নগদ নম্বর:</p>
-<div class="number">01990624653</div>
-<button class="btn orange" onclick="copyNum('01990624653')">
-নম্বর কপি করুন
-</button>
-<p>১০০ টাকা Send Money করুন।</p>
-</div>
-</div>
-
+<!-- SERVICE MENU -->
 <div class="card">
 <div class="menu-title">🛠️ সার্ভিসিং মেনু</div>
 
-<button class="menu-btn" onclick="chooseService('মোটর সাইকেল সার্ভিসিং')">
-🏍️ মোটর সাইকেল সার্ভিসিং
+<button class="menu-btn" onclick="openPage('bookingPage')">
+🏍️ সার্ভিসিং বুকিং
 </button>
-<button class="menu-btn" onclick="chooseService('ইলেকট্রিক')">⚡ ইলেকট্রিক</button>
-<button class="menu-btn" onclick="chooseService('প্লাম্বার')">🚰 প্লাম্বার</button>
-<button class="menu-btn" onclick="chooseService('এসি সার্ভিস')">❄️ এসি সার্ভিস</button>
-<button class="menu-btn" onclick="chooseService('মিস্ত্রি')">🔨 মিস্ত্রি</button>
-<button class="menu-btn" onclick="chooseService('ক্লিনিং')">🧹 ক্লিনিং</button>
-<button class="menu-btn" onclick="chooseService('কম্পিউটার সার্ভিস')">💻 কম্পিউটার সার্ভিস</button>
 
-<button class="menu-btn" onclick="showBookings()">
-📋 আমার সার্ভিসিং আবেদন
+<button class="menu-btn" onclick="openPage('myPage')">
+📋 আমার আবেদন
 </button>
 </div>
 
+<button class="menu-btn" onclick="openPage('homePage')">
+🏠 ড্যাশবোর্ড
+</button>
+
+<a class="whatsapp" href="https://whatsapp.com/dl/" target="_blank">
+💬 WhatsApp Support
+</a>
+
 </aside>
 
-<!-- ডান পাশের Dashboard -->
+<!-- MAIN CONTENT -->
 <main class="main">
 
+<!-- HOME PAGE -->
+<section id="homePage">
 <div class="banner">
 <div>
 <h1>Local Servicing</h1>
 <p>আপনার এলাকার সেরা সার্ভিস</p>
-<p>⚡ দ্রুত সার্ভিস • নিরাপদ সেবা • সাশ্রয়ী মূল্য</p>
+<p>✓ দ্রুত সার্ভিস ✓ নিরাপদ সেবা</p>
 </div>
 <div class="bike">🏍️</div>
 </div>
 
-<!-- সার্ভিস বুকিং -->
-<div class="card" id="bookingCard">
-<h3 class="title">🛠️ সার্ভিসিং বুকিং</h3>
+<div class="stats">
+<div class="stat">💳<br>মোট পেমেন্ট<br>৳ 100</div>
+<div class="stat">📋<br>মোট বুকিং<br>0 টি</div>
+<div class="stat">✅<br>সম্পন্ন সার্ভিস<br>0 টি</div>
+<div class="stat">⭐<br>রেটিং<br>5.0</div>
+</div>
+
+<div class="card">
+<h3>Local Servicing Dashboard</h3>
+<p>সার্ভিস নিতে বাম পাশের সার্ভিসিং মেনুতে চাপ দিন।</p>
+<p>পেমেন্ট করতে পেমেন্ট মেনুতে চাপ দিন।</p>
+</div>
+</section>
+
+<!-- PAYMENT PAGE -->
+<section id="paymentPage" class="hidden">
+<div class="card">
+<h2>💳 পেমেন্ট করুন</h2>
+<div class="notice">সার্ভিস বুকিংয়ের জন্য ১০০ টাকা অগ্রিম দিতে হবে।</div>
+
+<div class="paybox">
+<h2 style="color:#e21370">💗 বিকাশ</h2>
+<div class="paynum">01919011365</div>
+<button class="btn red" onclick="copyNum('01919011365')">বিকাশ নম্বর কপি</button>
+<p>বিকাশে ১০০ টাকা Send Money করুন।</p>
+</div>
+
+<div class="paybox nagad">
+<h2 style="color:#e63812">🟠 নগদ</h2>
+<div class="paynum">01990624653</div>
+<button class="btn orange" onclick="copyNum('01990624653')">নগদ নম্বর কপি</button>
+<p>নগদে ১০০ টাকা Send Money করুন।</p>
+</div>
+</div>
+</section>
+
+<!-- BOOKING PAGE -->
+<section id="bookingPage" class="hidden">
+<div class="card">
+<h2>🏍️ সার্ভিসিং বুকিং</h2>
 
 <form id="bookingForm">
-
 <label>আপনার নাম</label>
-<input id="name" required placeholder="আপনার নাম লিখুন">
+<input id="name" required placeholder="নাম লিখুন">
 
 <label>মোবাইল নম্বর</label>
-<input id="phone" type="tel" required placeholder="আপনার মোবাইল নম্বর">
+<input id="phone" type="tel" required placeholder="মোবাইল নম্বর">
 
 <label>আপনার ঠিকানা</label>
-<input id="address" required placeholder="আপনার ঠিকানা লিখুন">
+<input id="address" required placeholder="ঠিকানা লিখুন">
 
-<label>সার্ভিস নির্বাচন করুন</label>
+<label>সার্ভিস নির্বাচন</label>
 <select id="service" required>
 <option value="">সার্ভিস নির্বাচন করুন</option>
 <option>মোটর সাইকেল সার্ভিসিং</option>
@@ -254,55 +191,61 @@ onclick="showPay('nagad')">🟠 নগদ</button>
 </select>
 
 <label>সমস্যার বিবরণ</label>
-<textarea id="details" required placeholder="আপনার সমস্যার বিবরণ লিখুন"></textarea>
+<textarea id="details" required placeholder="সমস্যা লিখুন"></textarea>
 
-<div class="notice">
-💰 সার্ভিস বুকিংয়ের জন্য ১০০ টাকা অগ্রিম দিতে হবে।
-</div>
+<div class="notice">১০০ টাকা অগ্রিম পেমেন্ট করুন</div>
 
 <label>পেমেন্ট মাধ্যম</label>
-<select id="payment" required onchange="showPay(this.value)">
-<option value="">পেমেন্ট মাধ্যম নির্বাচন করুন</option>
-<option value="bkash">বিকাশ</option>
-<option value="nagad">নগদ</option>
+<select id="payment" required>
+<option value="">পেমেন্ট নির্বাচন</option>
+<option>বিকাশ</option>
+<option>নগদ</option>
 </select>
 
 <label>Transaction ID</label>
-<input id="trx" required placeholder="ট্রানজেকশন আইডি লিখুন">
+<input id="trx" required placeholder="Transaction ID লিখুন">
 
 <label>যে নম্বর থেকে টাকা পাঠিয়েছেন</label>
-<input id="sender" type="tel" required placeholder="আপনার টাকা পাঠানোর নম্বর">
+<input id="sender" type="tel" required placeholder="টাকা পাঠানোর নম্বর">
 
 <button class="btn green" type="submit">✓ সাবমিট করুন</button>
-<button class="btn blue" type="reset">↻ ফরম পূরণ করুন</button>
-
+<button class="btn blue" type="reset">ফরম পূরণ করুন</button>
 <p id="message"></p>
 </form>
 </div>
+</section>
 
-<!-- আমার আবেদন -->
-<div class="card hidden" id="bookingsCard">
-<h3 class="title">📋 আমার সার্ভিসিং আবেদন</h3>
-<p id="bookingList">আপনার আবেদন এখানে দেখা যাবে।</p>
-<button class="btn blue" onclick="backBooking()">← বুকিং ফর্মে ফিরুন</button>
+<!-- MY APPLICATION PAGE -->
+<section id="myPage" class="hidden">
+<div class="card">
+<h2>📋 আমার সার্ভিসিং আবেদন</h2>
+<p>আপনার আবেদন ও বুকিংয়ের অবস্থা এখানে দেখা যাবে।</p>
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>নং</th>
+<th>সার্ভিস</th>
+<th>পেমেন্ট</th>
+<th>স্ট্যাটাস</th>
+</tr>
+</thead>
+<tbody id="applicationList">
+<tr><td colspan="4">এখনও কোনো আবেদন নেই</td></tr>
+</tbody>
+</table>
 </div>
+</div>
+</section>
 
 </main>
 </div>
 
-<footer>
-❤️ Local Servicing | আপনার পাশে সবসময়
-</footer>
-
-<!-- WhatsApp Support -->
-<a class="whatsapp" href="https://whatsapp.com/dl/" target="_blank">
-💬 WhatsApp Support
-</a>
+<footer>❤️ Local Servicing | আপনার পাশে সবসময়</footer>
 
 <script type="module">
 import {initializeApp}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import {
 getAuth,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -316,8 +259,7 @@ messagingSenderId:"678442800678",
 appId:"1:678442800678:web:dc364fe500d9c3e37af8e7"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
+const auth=getAuth(initializeApp(firebaseConfig));
 
 onAuthStateChanged(auth,user=>{
 if(user){
@@ -333,22 +275,11 @@ await signOut(auth);
 window.location.href="login.html";
 };
 
-window.togglePayment=()=>{
-document.getElementById("paymentMenu").classList.toggle("hidden");
-};
-
-window.showPay=(method)=>{
-document.getElementById("bkashInfo").classList.add("hidden");
-document.getElementById("nagadInfo").classList.add("hidden");
-
-if(method==="bkash"){
-document.getElementById("bkashInfo").classList.remove("hidden");
-document.getElementById("payment").value="bkash";
-}
-if(method==="nagad"){
-document.getElementById("nagadInfo").classList.remove("hidden");
-document.getElementById("payment").value="nagad";
-}
+window.openPage=(page)=>{
+["homePage","paymentPage","bookingPage","myPage"].forEach(id=>{
+document.getElementById(id).classList.add("hidden");
+});
+document.getElementById(page).classList.remove("hidden");
 };
 
 window.copyNum=async(num)=>{
@@ -360,26 +291,17 @@ alert("পেমেন্ট নম্বর: "+num);
 }
 };
 
-window.chooseService=(service)=>{
-document.getElementById("service").value=service;
-document.getElementById("bookingCard").scrollIntoView({behavior:"smooth"});
-};
-
-window.showBookings=()=>{
-document.getElementById("bookingCard").classList.add("hidden");
-document.getElementById("bookingsCard").classList.remove("hidden");
-};
-
-window.backBooking=()=>{
-document.getElementById("bookingsCard").classList.add("hidden");
-document.getElementById("bookingCard").classList.remove("hidden");
-};
-
 document.getElementById("bookingForm").addEventListener("submit",e=>{
 e.preventDefault();
 
+const service=document.getElementById("service").value;
+const trx=document.getElementById("trx").value.trim();
+
 document.getElementById("message").innerText=
-"আবেদন তথ্য গ্রহণ করা হয়েছে। পেমেন্ট যাচাই করে বুকিং নিশ্চিত করা হবে।";
+"আবেদন তথ্য পূরণ হয়েছে। পেমেন্ট যাচাই করে বুকিং নিশ্চিত করা হবে।";
+
+document.getElementById("applicationList").innerHTML=
+"<tr><td>1</td><td>"+service+"</td><td>"+trx+"</td><td>পেন্ডিং</td></tr>";
 });
 
 document.getElementById("bookingForm").addEventListener("reset",()=>{
@@ -389,3 +311,4 @@ document.getElementById("message").innerText="";
 
 </body>
 </html>
+
